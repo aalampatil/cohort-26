@@ -1,0 +1,1 @@
+const columns = document.getElementsByClassName("column")
