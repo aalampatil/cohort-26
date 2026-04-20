@@ -47,6 +47,10 @@ app.get("/o/authenticate", (req, res) => {
   return res.sendFile(path.resolve("public", "authenticate.html"));
 });
 
+app.get("/o/authenticate/register", (req, res) => {
+  return res.sendFile(path.resolve("public", "signup.html"));
+});
+
 app.post("/o/token", async (req, res) => {
   const { grant_type, code, redirect_uri, client_id, client_secret } = req.body;
 
