@@ -7,6 +7,7 @@ import {
   timestamp,
 } from "drizzle-orm/pg-core";
 
+//user table
 export const usersTable = pgTable("users", {
   id: uuid("id").primaryKey().defaultRandom(),
 
@@ -23,4 +24,30 @@ export const usersTable = pgTable("users", {
 
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").$onUpdate(() => new Date()),
+});
+
+export const oauthClientsTable = pgTable("oauth_clients", {
+  id: text("id").primaryKey(), // this IS the client_id
+  secret: text("secret").notNull(), // hashed client_secret
+  name: varchar("name", { length: 100 }).notNull(),
+  redirectUris: text("redirect_uris").notNull(), // stored as JSON string array
+  scopes: varchar("scopes", { length: 255 })
+    .notNull()
+    .default("openid email profile"),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+});
+
+export const authCodesTable = pgTable("auth_codes", {
+  code: text("code").primaryKey(),
+  clientId: text("client_id")
+    .notNull()
+    .references(() => oauthClientsTable.id),
+  userId: uuid("user_id")
+    .notNull()
+    .references(() => usersTable.id), // links to your existing users table
+  redirectUri: text("redirect_uri").notNull(),
+  scopes: varchar("scopes", { length: 255 }).notNull(),
+  expiresAt: timestamp("expires_at").notNull(),
+  used: boolean("used").default(false).notNull(),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
 });
