@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>Authorize App</title>
     <style>
       * {
         box-sizing: border-box;
@@ -13,129 +13,121 @@
 
       body {
         font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-        background: #f3f4f6;
+        background: #fff;
         min-height: 100vh;
         display: grid;
         place-items: center;
       }
 
       .card {
-        background: white;
-        border-radius: 12px;
-        padding: 2rem;
         width: 100%;
-        max-width: 420px;
-        box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+        max-width: 400px;
+        padding: 2.5rem;
       }
 
       .app-header {
-        text-align: center;
-        margin-bottom: 1.5rem;
+        margin-bottom: 2rem;
       }
 
       .app-icon {
-        width: 56px;
-        height: 56px;
-        background: #6366f1;
-        border-radius: 12px;
+        width: 40px;
+        height: 40px;
+        background: #000;
+        border-radius: 8px;
         display: inline-grid;
         place-items: center;
-        font-size: 1.5rem;
-        margin-bottom: 0.75rem;
+        font-size: 1.1rem;
+        margin-bottom: 1.25rem;
       }
 
       .app-header h2 {
         font-size: 1.1rem;
-        color: #111;
+        font-weight: 600;
+        color: #000;
+        margin-bottom: 0.25rem;
       }
 
       .app-header h2 span {
-        color: #6366f1;
         font-weight: 700;
       }
 
       .app-header p {
         font-size: 0.85rem;
         color: #6b7280;
-        margin-top: 0.25rem;
       }
 
       .scopes {
-        background: #f9fafb;
         border: 1px solid #e5e7eb;
         border-radius: 8px;
         padding: 1rem;
-        margin-bottom: 1.5rem;
+        margin-bottom: 1.75rem;
       }
 
-      .scopes p {
-        font-size: 0.8rem;
-        color: #6b7280;
-        margin-bottom: 0.5rem;
+      .scopes-label {
+        font-size: 0.72rem;
+        color: #9ca3af;
         font-weight: 600;
         text-transform: uppercase;
-        letter-spacing: 0.05em;
+        letter-spacing: 0.06em;
+        margin-bottom: 0.6rem;
       }
 
       .scope-item {
         display: flex;
         align-items: center;
         gap: 0.5rem;
-        font-size: 0.9rem;
+        font-size: 0.875rem;
         color: #374151;
-        padding: 0.35rem 0;
+        padding: 0.25rem 0;
       }
 
       .scope-item::before {
         content: "✓";
-        color: #10b981;
+        color: #000;
         font-weight: 700;
+        font-size: 0.75rem;
       }
 
       .divider {
-        text-align: center;
+        font-size: 0.78rem;
         color: #9ca3af;
-        font-size: 0.8rem;
         margin-bottom: 1rem;
       }
 
-      input {
+      input[type="email"],
+      input[type="password"] {
         width: 100%;
         padding: 0.65rem 0.875rem;
-        border: 1px solid #d1d5db;
+        border: 1px solid #e5e7eb;
         border-radius: 8px;
-        font-size: 0.95rem;
-        margin-bottom: 0.75rem;
+        font-size: 0.9rem;
+        margin-bottom: 0.65rem;
         outline: none;
+        color: #111;
         transition: border-color 0.15s;
+        background: #fff;
       }
 
-      input:focus {
-        border-color: #6366f1;
+      input[type="email"]:focus,
+      input[type="password"]:focus {
+        border-color: #000;
       }
 
-      .error {
-        background: #fef2f2;
-        border: 1px solid #fecaca;
-        color: #dc2626;
-        border-radius: 8px;
-        padding: 0.65rem 0.875rem;
-        font-size: 0.875rem;
-        margin-bottom: 0.75rem;
-        display: none;
+      input::placeholder {
+        color: #9ca3af;
       }
 
       .actions {
         display: grid;
         grid-template-columns: 1fr 1fr;
-        gap: 0.75rem;
-        margin-top: 0.5rem;
+        gap: 0.65rem;
+        margin-top: 0.25rem;
       }
 
       button {
         padding: 0.65rem;
         border-radius: 8px;
-        font-size: 0.95rem;
+        font-size: 0.9rem;
         font-weight: 600;
         cursor: pointer;
         border: none;
@@ -143,156 +135,115 @@
       }
 
       button:hover {
-        opacity: 0.85;
-      }
-      button:disabled {
-        opacity: 0.5;
-        cursor: not-allowed;
+        opacity: 0.75;
       }
 
       .btn-allow {
-        background: #6366f1;
-        color: white;
+        background: #000;
+        color: #fff;
       }
 
       .btn-deny {
-        background: #f3f4f6;
-        color: #374151;
-        border: 1px solid #d1d5db;
+        background: #fff;
+        color: #111;
+        border: 1px solid #e5e7eb;
       }
 
       .footer {
-        text-align: center;
-        font-size: 0.78rem;
+        font-size: 0.75rem;
         color: #9ca3af;
-        margin-top: 1.25rem;
+        margin-top: 1.5rem;
+        padding-top: 1.5rem;
+        border-top: 1px solid #f3f4f6;
       }
     </style>
   </head>
-  <body></body>
-  <div class="card">
-    <div class="app-header">
-      <div class="app-icon">🔐</div>
-      <h2><span id="app-name">App</span> wants access</h2>
-      <p>Sign in to your account to continue</p>
+  <body>
+    <div class="card">
+      <div class="app-header">
+        <div class="app-icon">🔐</div>
+        <h2><span id="app-name">App</span> wants access</h2>
+        <p>Sign in to your account to continue</p>
+      </div>
+
+      <div class="scopes">
+        <div class="scopes-label">Permissions requested</div>
+        <div id="scope-list"></div>
+      </div>
+
+      <div class="divider">Enter your credentials to allow access</div>
+
+      <form method="POST" action="/o/3rd-party-client/authorize">
+        <input type="hidden" name="client_id" id="f-client_id" />
+        <input type="hidden" name="redirect_uri" id="f-redirect_uri" />
+        <input type="hidden" name="scope" id="f-scope" />
+        <input type="hidden" name="state" id="f-state" />
+
+        <input
+          type="email"
+          name="email"
+          placeholder="Email"
+          autocomplete="email"
+        />
+        <input
+          type="password"
+          name="password"
+          placeholder="Password"
+          autocomplete="current-password"
+        />
+
+        <div class="actions">
+          <button type="button" class="btn-deny" id="btn-deny">Deny</button>
+          <button type="submit" class="btn-allow">Allow</button>
+        </div>
+      </form>
+
+      <div class="footer">
+        Your credentials are verified by the auth server.
+        <strong id="app-name-footer"></strong> will not see your password.
+      </div>
     </div>
-    <div class="scopes">
-      <p>This app will be able to</p>
-      <div id="scope-list"></div>
-    </div>
 
-    <div class="divider">Enter your credentials to allow access</div>
+    <script>
+      const params = new URLSearchParams(window.location.search);
+      const clientId = params.get("client_id") ?? "";
+      const redirectUri = params.get("redirect_uri") ?? "";
+      const scope = params.get("scope") ?? "openid";
+      const state = params.get("state") ?? "";
 
-    <div class="error" id="error-box"></div>
+      document.getElementById("f-client_id").value = clientId;
+      document.getElementById("f-redirect_uri").value = redirectUri;
+      document.getElementById("f-scope").value = scope;
+      document.getElementById("f-state").value = state;
 
-    <input
-      type="email"
-      id="email"
-      placeholder="Email address"
-      autocomplete="email"
-    />
-    <input
-      type="password"
-      id="password"
-      placeholder="Password"
-      autocomplete="current-password"
-    />
+      const SCOPE_LABELS = {
+        openid: "Verify your identity",
+        email: "Read your email address",
+        profile: "Read your name and profile picture",
+      };
 
-    <div class="actions">
-      <button class="btn-deny" id="btn-deny">Deny</button>
-      <button class="btn-allow" id="btn-allow">Allow</button>
-    </div>
-
-    <div class="footer">
-      Your credentials are verified by the auth server.<br />
-      <strong id="app-name-footer"></strong> will not see your password.
-    </div>
-  </div>
-
-  <script>
-    const params = new URLSearchParams(window.location.search);
-    const clientId = params.get("client_id");
-    const redirectUri = params.get("redirect_uri");
-    const scope = params.get("scope") ?? "openid";
-    const state = params.get("state") ?? "";
-
-    const SCOPE_LABELS = {
-      openid: "Verify your identity",
-      email: "Read your email address",
-      profile: "Read your name and profile picture",
-    };
-    const scopeList = document.getElementById("scope-list");
-    scope.split(" ").forEach((s) => {
-      const label = scopeList[s];
-      const div = document.createElement("div");
-      div.className = "scope-item";
-      div.textContent = label;
-      scopeList.appendChild(div);
-    });
-
-    fetch(`/o/3rd-party-client/${clientId}`)
-      .then((r) => r.json())
-      .then((data) => {
-        document.getElementById("app-name").textContent = data.name;
-        document.getElementById("app-name-footer").textContent = data.name;
+      const scopeList = document.getElementById("scope-list");
+      scope.split(" ").forEach((s) => {
+        const div = document.createElement("div");
+        div.className = "scope-item";
+        div.textContent = SCOPE_LABELS[s] ?? s;
+        scopeList.appendChild(div);
       });
 
-    document.getElementById("btn-deny").addEventListener("click", () => {
-      const url = new URL(redirectUri);
-      url.searchParams.set("error", "access_denied");
-      if (state) url.searchParams.set("state", state);
-      window.location.href = url.toString();
-    });
-
-    document.getElementById("btn-allow").addEventListener("click", async () => {
-      const email = document.getElementById("email").value.trim();
-      const password = document.getElementById("password").value;
-      const errorBox = document.getElementById("error-box");
-      const allowBtn = document.getElementById("btn-allow");
-
-      errorBox.style.display = "none";
-
-      if (!email || !password) {
-        errorBox.textContent = "Please enter your email and password.";
-        errorBox.style.display = "block";
-        return;
-      }
-
-      allowBtn.disabled = true;
-      allowBtn.textContent = "Verifying...";
-
-      try {
-        const res = await fetch("/o/3rd-party-cleint/authorize", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            email,
-            password,
-            client_id: clientId,
-            redirect_uri: redirectUri,
-            scope,
-            state,
-          }),
+      fetch(`/o/3rd-party-client/${clientId}`)
+        .then((r) => r.json())
+        .then((data) => {
+          document.getElementById("app-name").textContent = data.name;
+          document.getElementById("app-name-footer").textContent =
+            data.name + " ";
         });
 
-        const data = await res.json();
-
-        if (!res.ok) {
-          errorBox.textContent = data.message ?? "Invalid credentials.";
-          errorBox.style.display = "block";
-          allowBtn.disabled = false;
-          allowBtn.textContent = "Allow";
-          return;
-        }
-
-        // Server will return the redirect URL with the code
-        window.location.href = data.redirectUrl;
-      } catch (err) {
-        errorBox.textContent = "Something went wrong. Please try again.";
-        errorBox.style.display = "block";
-        allowBtn.disabled = false;
-        allowBtn.textContent = "Allow";
-      }
-    });
-  </script>
+      document.getElementById("btn-deny").addEventListener("click", () => {
+        const url = new URL(redirectUri);
+        url.searchParams.set("error", "access_denied");
+        if (state) url.searchParams.set("state", state);
+        window.location.href = url.toString();
+      });
+    </script>
+  </body>
 </html>
